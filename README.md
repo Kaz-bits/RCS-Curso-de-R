@@ -1,1 +1,1 @@
-# RCS.-Curso-de-R
+# Curso de lenguaje de programación R
