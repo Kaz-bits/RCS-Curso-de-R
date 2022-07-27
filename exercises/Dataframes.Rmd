@@ -1,0 +1,359 @@
+---
+title: "Tutorial"
+author: "César Antonio Ponce-Diego"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Dataframes I
+
+### Ejercicio 1. 
+
+Una de las estructuras de datos más utilizadas en el lenguaje de programación R es el data frame. Recuerda que los data frames son arreglos rectangulares en 2D. Esto quiere decir que las dimensiones son los renglones y las columnas. 
+
+Los data frames se generan con la función `data.frame()`, donde dentro de los paréntesis se colocan los vectores. A estos vectores se les puede añadir un nombre, el cual representará el nombre de la columna.
+
+Vamos a considerar el siguiente data frame a lo largo de los ejercicios:
+
+```{r df1, exercise=TRUE}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+```
+
+Responde las siguientes preguntas.
+
+```{r df1_ex, echo=FALSE}
+quiz(
+  question("Con solo observar las columnas, selecciona la opción que contenga la clase de cada una de las columnas de data frame",
+  answer("`number`: numeric; `Income`: numeric; `Gender`: character; `Home_owner`: logical; `Age`: numeric; `Purchased`: character; `Education`: character", 
+         correct = TRUE),
+  answer("`number`: logical; `Income`: logical; `Gender`: character; `Home_owner`: logical; `Age`: numeric; `Purchased`: character; `Education`: numeric"),
+  answer("`number`: numeric; `Income`: numeric; `Gender`: character; `Home_owner`: character; `Age`: numeric; `Purchased`: logical; `Education`: numeric"),
+  answer("`number`: numeric; `Income`: numeric; `Gender`: logical; `Home_owner`: logical; `Age`: numeric; `Purchased`: logical; `Education`: character"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+  )
+)
+```
+
+Con solo observar las columnas de un data frame (aunque este sea pequeño) para conocer las características de las columnas, resulta una tarea tediosa y con propensión a errores. 
+
+Para evitar esto, recurrimos al uso de funciones que permiten observar la estructura de los data frames. Una de ellas es `str()`. Ejecuta el siguiente código en la consola: 
+
+```{r df2, exercise=TRUE}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+
+#Ejecuta lo siguiente
+str(bike_buyers)
+
+```
+
+Como puedes notar, es más fácil observar la estructura del data frame y de las columnas. De esta forma, ahora sabemos que cada columna pertenece a una cierta clase, cuántos renglones y cuántas columnas hay, y una breve muestra de los datos. 
+
+Responde las preguntas. 
+
+```{r df2_ex, echo=FALSE}
+quiz( 
+question("¿Qué función se utiliza para visulizar un data frame completo?", 
+    answer("`View()`", correct = TRUE),
+    answer("`head()`"),
+    answer("`tail()`"),
+    answer("`summary()`"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("¿Qué resultado se obtiene (de manera general) al ejecutar en la consola la función `head()`?",
+    answer("Un resumen estadísticos de cada variable (o columna) de un data frame o de un vector"),
+    answer("Muestra los últimos seis renglones de un data frame o de un vector"),
+    answer("Muestra los primeros seis renglones de un data frame o de un vector", correct = TRUE),
+    answer("Abre una pestaña nueva y muestra el data frame completo"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("¿Qué resultado se obtiene (de manera general) al ejecutar en la consola la función `tail()`?",
+    answer("Un resumen estadísticos de cada variable (o columna) de un data frame o de un vector"),
+    answer("Muestra los últimos seis renglones de un data frame o de un vector", correct = TRUE),
+    answer("Muestra los primeros seis renglones de un data frame o de un vector"),
+    answer("Abre una pestaña nueva y muestra el data frame completo"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("¿Qué resultado se obtiene (de manera general) al ejecutar en la consola la función `summary()`?",
+    answer("Un resumen estadísticos de cada variable (o columna) de un data frame o de un vector", correct = TRUE),
+    answer("Muestra los últimos seis renglones de un data frame o de un vector"),
+    answer("Muestra los primeros seis renglones de un data frame o de un vector"),
+    answer("Abre una pestaña nueva y muestra el data frame completo"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+
+```
+
+Es importante destacar que, las funciones `View()`, `head()` `tail()` y  `summary()` no funciona únicamente con data frames como argumentos, sino que, puede aceptar cualquier objeto de R, como los vectores. Prueba tú misma(o) ejecutando cada una de las funciones anteriores en tu consola y colocando diferentes vectores como argumento, y observa lo que ocurre. 
+
+
+## Dataframes II
+
+### Ejercicio 2.
+
+Considera de nuevo el data frame guardado en la variable `bike_buyers`
+
+
+```{r df3, exercise=TRUE}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+
+```
+
+Responde las preguntas. 
+
+```{r df3_ex, echo=FALSE}
+quiz( 
+question("¿Cuál es el símbolo que se emplea para extraer elementos de un data frame?", 
+    answer("`[]`", correct = TRUE, message = "Es el muy utilizado, aunque el operador `$` también se usa para extraer elementos, como las columnas"),
+    answer("`{}`"),
+    answer("`()`"),
+    answer("`$`", correct = TRUE, message = "Recuerda, el signo `$` se utiliza para extraer elementos como las columnas"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("Considera el siguiente código: `bike_buyers[x, y]`, ¿qué representa que la `x` esté antes de la coma y la `y` despúes de la coma?",
+    answer("`x`: renglones; `y`: columnas", correct = TRUE),
+    answer("`x`: columnas; `y`: renglones"),
+    answer("`x`: renglones; `y`: renglones"),
+    answer("`x`: columnas; `y`: columnas"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("Indica qué elemento se extrae con el siguiente código: `bike_buyers[2, 3]` ",
+    answer("El elemento del renglón 2 y columna 3", 
+           correct = TRUE),
+    answer("El elemento de la columna 2 y el renglón 3"),
+    answer("El elemento del renglón 2 y renglón 3"),
+    answer("No se extrae nada y se genera un error"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("Si quisieramos extraer más de un renglón o más de una columna al mismo tiempo, ¿cuál sería la sintaxis correcta? Por ejemplo, extraer las columnas 3, 4 y 5 y los renglones 1, 5, 8 y 10? *Más de una respuesta correcta*",
+    answer("`bike_buyers[c(1, 5, 8, 10), c(3, 4, 5)]`", 
+           correct = TRUE),
+    answer("`bike_buyers[c(1, 5, 8, 10), c(3:5)]`", 
+           correct = TRUE),
+    answer("`bike_buyers[c(1, 5, 8, 10), 3:5]`", 
+           correct = TRUE),
+    answer("`bike_buyers[1, 5, 8, 10, 3, 4, 5]`"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+  question("Si ejecutamos en la consola el siguiente código: `bike_buyers[-c(3,5,7,9,1), -c(1,4,6,8,10)]`, ¿qué renglones y qué columnas obtendríamos como resultado?",
+    answer("`Columnas`: 1, 4, 6, 8, 10 ; `Renglones`: 2, 4, 6, 8, 10"),
+    answer("`Columnas`: 2, 3, 5, 7, 9; `Renglones`: 2, 4, 6, 8, 10", correct = TRUE),
+    answer("`Columnas`: 1, 4, 6, 8, 10; `Renglones`: 3, 5, 7, 9, 1"),
+    answer("`Columnas`: 2, 3, 5, 7, 9; `Renglones`: 3, 5, 7, 9, 1"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+
+```
+
+## Dataframes III
+
+### Ejercicio 3
+
+Bien, ahora sabes cómo extraer más de un renglón o más de una columna de un data frame, utilizando los corchetes (`[]`), una coma (`,`) y la función de concatenar (`c()`). 
+
+Los códigos anteriores permiten obtener renglones y columnas en específico. En muchas ocasiones, buscaremos extraer una columna o varias columnas pero con todos los renglones. 
+
+Vamos a extraer dos columnas con todos los renglones del data frame `bike_buyers`. El siguiente código permite realizarlo:
+
+```{r df4, exercise=TRUE}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+#Extraer dos columnas y todos los renglones
+bike_buyers[,c(1,2)]
+
+
+
+#--
+```
+
+1. Ahora, intenta extraer la columna 4 y 1 utilizando los corchetes y la función `c()`:
+
+```{r df5, exercise=TRUE}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+#Extraer columna 4 y 1
+
+
+
+
+#--
+```
+
+```{r df5-solution}
+bike_buyers[, c(4,1)]
+
+```
+
+```{r df5_ex, echo=FALSE}
+quiz(
+  question("¿El resultado obtenido de extraer la columna 4 y 1, ¿qué tipo de estructura de datos se obtuvo?",
+   answer("Lista"),
+   answer("Data frame", correct = TRUE),
+   answer("Vector"),
+   answer("Matriz"),
+   allow_retry = TRUE,
+   random_answer_order = TRUE
+  ),
+    question("Ahora ejecuta en la consola: `bike_buyers[c(4,1), ]`. ¿Qué tipo de estructura de datos se obtuvo?",
+    answer("Matriz"),
+    answer("Data frame", correct = TRUE),
+    answer("Vector"),
+    answer("Lista"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  ),
+    question("¿Por qué en los códigos anteriores, se obtiene ese tipo de estructura de datos?",
+    answer("Al extraer dos columnas, siempre se obtendrá un data frame", correct = TRUE),
+    answer("Al extraer un renglón siempre se obtendrá un data frame", correct = TRUE),
+    answer("Al extraer dos columnas, siempre se obtendrá un vector"),
+    answer("Al extraer un renglón siempre se obtendrá un vector"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+
+```
+
+
+## Data frames IV
+
+### Ejercicio 4
+
+Existe otro tipo de operador que se emplea únicamente ara extraer columna de un data frame. En este caso, se trata del operador `$`. Responde la siguiente pregunta:
+
+
+```{r df6-ex, exercise=TRUE}
+quiz(
+  question("Al extraer una columna de un data frame con el operador `$`, ¿el resultado es un objeto de qué clase?",
+   answer("Matriz"),
+   answer("Data frame"),
+   answer("Vector", correct = TRUE),
+   answer("Matriz"),
+   allow_retry = TRUE,
+   random_answer_order = TRUE
+  )
+)
+
+```
+
+1. Considera el mismo data frame: `bike_buyers`
+2. Escribe un código que te permita extraer la columna `Income` en forma de vector
+3. Escribe un código que te permita extraer las columnas `Income` y `Purchased`.
+4. Escribe un código que te permita obtener los renglones del `1 al 5` de las columnas `Income`, `Purchased` y `Age`
+
+
+**NOTA: Hay muchas formas de poder extraer las columnas anteriores, piensa en una de ellas y ejecútala en la consola. Hay un apartado de `solución` para que conozcas otras formas de resolver el ejercicio**
+
+```{r df7, exercise=TRUE, exercise.lines = 15}
+bike_buyers <- data.frame(
+  number = c(12496, 24107, 14177, 24381, 25597, 13507, 27974, 19364, 22155, 19280),
+  Income = c(40000, 30000, 80000, 70000, 30000, 10000, 160000, 40000, 20000, 50000),
+  Gender = c("Female", "Male", "Male", "Female", "Male", "Female", "Male", "Male","Male", "Male"),
+  Home_owner = c(TRUE, TRUE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 
+  Age = c(42, 43, 40, 60, 41, 50, 33, 54, 36, 47), 
+  Purchased = c("No", "No", "Yes", "No", "Yes", "Yes", "Yes", "No", "No", "Yes"),
+  Education = c("Bachelors", "Partial College", "Partial College", "Bachelors", "Bachelors", "Partial College", "High School", "Bachelors", "Partial High School", "Partial College"
+))
+
+#Escribe tu código (extraer columna Income)
+
+
+
+
+#Escribe tu código (extraer columnas Income y Purchased)
+
+
+
+
+#Escribe tu código (extraer columnas Income, Purchased y Age)
+
+
+
+
+#--
+```
+
+
+```{r df7-solution}
+#Escribe tu código (extraer columna Income)
+bike_buyers$Income
+bike_buyers[, 2]
+bike_buyers[, -c(1,3:7)]
+bike_buyers[, -c(1,3,4,5,6,7)]
+bike_buyers[, "Income"]
+
+
+#Escribe tu código (extraer columnas Income y Purchased)
+bike_buyers[, c(2,6)]
+bike_buyers[, -c(1,3:5,7)]
+bike_buyers[, -c(1,3,4,5,7)]
+bike_buyers[, c("Income", "Purchased")]
+
+
+#Escribe tu código (extraer columnas Income, Purchased y Age y renglones del 1 al 5)
+bike_buyers[c(1,2,3,4,5), c(2,6,5)]
+bike_buyers[c(1:5), c(2,6,5)]
+bike_buyers[1:5, c(2,6,5)]
+bike_buyers[1:5, c("Income", "Purchased", "Age")]
+
+
+```
