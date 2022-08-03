@@ -18,6 +18,9 @@ ggscatter(data = iris,
   coord_cartesian(xlim = c(1,7)) +
   scale_x_continuous(breaks = seq(1,7,1.3))
             
+#Guardar gráfico
+ggsave(filename = "PLOTS/ggplot_RCS.png", device = "png",
+       width = 6, height = 3.5, units = "in", dpi = 450)
 
 #Es posible realizar el mismo procedimiento con ggplot2,
 #sin embargo, dicho procedimiento implica realizar paso a
@@ -68,12 +71,56 @@ ggboxplot(data = CO2,
           add = "jitter",
           xlab = expression(paste("CO"[2], " (mL/L)")),
           ylab = expression(paste("CO"[2]," (", mu, "mol/m"^2, ")"))) +
-  theme(legend.position = element_blank()) +
   stat_compare_means() +
   coord_cartesian(ylim = c(10, 45)) +
-  scale_y_continuous(breaks = seq(10, 45, 5))
+  scale_y_continuous(breaks = seq(10, 45, 5)) +
+  rremove("legend")
+
+#Guardar gráfico
+ggsave(filename = "PLOTS/ggplot_RCS.png", device = "png",
+       width = 6, height = 3.5, units = "in", dpi = 450)
 
 
+#Boxplot con comparaciones entre concentraciones
+ggboxplot(data = CO2, 
+          x = "conc", 
+          y = "uptake", 
+          fill = "conc",
+          palette = "PuBu",
+          add = "jitter",
+          xlab = expression(paste("CO"[2], " (mL/L)")),
+          ylab = expression(paste("CO"[2]," (", mu, "mol/m"^2, ")"))) +
+  stat_compare_means(label = "p.signif", method = "t.test", ref.group = 1) + 
+  stat_compare_means(method = "anova", label.y = 50) +
+  coord_cartesian(ylim = c(10, 50)) +
+  scale_y_continuous(breaks = seq(10, 50, 5)) +
+  rremove("legend")
+
+#Guardar gráfico
+ggsave(filename = "PLOTS/ggplot_RCS.png", device = "png",
+       width = 6, height = 3.5, units = "in", dpi = 450)
 
 
+#Boxplot seleccionando las comparaciones
+my_comparison <- list(c("95","175"), 
+                      c("500","1000"), 
+                      c("250","500"))
 
+#Boxplot con comparaciones entre concentraciones
+ggboxplot(data = CO2, 
+          x = "conc", 
+          y = "uptake", 
+          fill = "conc",
+          palette = "PuBu",
+          add = "jitter",
+          xlab = expression(paste("CO"[2], " (mL/L)")),
+          ylab = expression(paste("CO"[2]," (", mu, "mol/m"^2, ")"))) +
+  stat_compare_means(comparisons = my_comparison) +
+  stat_compare_means(label.y = 60) +
+  coord_cartesian(ylim = c(10, 60)) +
+  scale_y_continuous(breaks = seq(10, 60, 5)) +
+  rremove("legend")
+
+#Guardar gráfico
+ggsave(filename = "PLOTS/ggplot_RCS.png", device = "png",
+       width = 6, height = 3.5, units = "in", dpi = 450)
