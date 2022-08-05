@@ -1,5 +1,6 @@
 #Paqueterías----
 library(ggplot2)
+library(RColorBrewer)
 
 
 #Condicional if----
@@ -82,14 +83,6 @@ for (i in names(table(CO2$Plant))) {
   
 }
 
-#Nested if-else----
-
-
-
-#Nested loops----
-
-
-
 
 #Programando gráficos----
 
@@ -143,7 +136,7 @@ mi_funcion(FALSE)
 
 #Funciones en gráficos de regresión
 geom_propio <- function(method = "lm", size = 2, ...) {
-
+  
   geom_smooth(
     method = method, 
     se = FALSE, 
@@ -171,22 +164,49 @@ ds_salaries <- read.csv(file = "https://raw.githubusercontent.com/Kaz-bits/RCS-C
                         header = TRUE, sep = ",")
 
 #Generar código
-salaries <- function(data, x, y, geom_fav) {
-
+salaries <- function() {
+  
   #Realizar gráfico
-  ggplot(data = data, aes(x = x, y = y)) +
+  ggplot(data = data, aes(x = xaxis, y = yaxis)) +
     geom_fav
-    
+  
 }
 
-salaries(iris, x = Petal.Width, 
-         y = Sepal.Length, geom_point())
+#Crear función para dataframe de CO2
+plant_co2 <- function(trt, org, show.plot, 
+                      box.color = "PuBu") {
   
+  #Código del gráfico
+  p <- ggplot(data = CO2[CO2$Treatment == trt &
+                           CO2$Type == org, ], aes(x = as.factor(conc), y = uptake,
+                         group = conc, fill = as.factor(conc))) +
+        geom_boxplot(show.legend = FALSE) +
+        theme_classic() +
+        labs(x = "Concentración incial de CO2", y = "Absorción de CO2") +
+        theme(axis.title = element_text(size = 14),
+              axis.text = element_text(size = 12)) +
+        coord_cartesian(ylim = c(5,50)) +
+        scale_y_continuous(breaks = seq(5,50,5)) + 
+        scale_fill_brewer(palette = box.color) +
+        annotate(geom = "text", x = 4, y = 50, label = trt,
+                 size = 5)
+  
+  #Mostrar gráfico
+  if (show.plot == TRUE) {
+    
+    print(p)
+    
+  } else {
+    
+    message("Gráfico realizado con éxito")
+    
+  }
+  
+}
 
-ggplot(data = ds_salaries, aes(y = as.factor(),
-                               x = salary)) +
-  geom_histogram(stat = "identity")
-
+#Llamar a la función
+plant_co2(trt = "nonchilled", org = "Mississippi", 
+          show.plot = TRUE, box.color = "OrRd")
 
 
 
