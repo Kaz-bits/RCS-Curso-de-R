@@ -1,69 +1,69 @@
-#Obtención de datos----
+#ObtenciÃ³n de datos----
 
 #Cargar el dataset llamado "iris" escribiendo en la
 #consola el nombre
 
 iris 
 
-#Podemos ver las características del dataset con la función
+#Podemos ver las caracterÃ­sticas del dataset con la funciÃ³n
 #str() como sigue
 
 str(iris) #150 observaciones y 5 variables (columnas)
 
 #Podemos ver los primeros 6 renglones de un dataset 
-#con la función head()
+#con la funciÃ³n head()
 
 head(iris)
 head(iris) #Primeros seis renglones
 head(iris, n = 8) #Primeros ocho renglones
 head(iris, n = 10) #Primeros 10 renglones
 
-#Podemos visualizar los últimos renglones de un dataset
-#con la función tail()
+#Podemos visualizar los Ãºltimos renglones de un dataset
+#con la funciÃ³n tail()
 
-tail(iris) #Últimos seis renglones
-tail(iris, n = 8) #Últimos ocho renglones
-tail(iris, n = 10) #Últimos 10 renglones
+tail(iris) #Ãšltimos seis renglones
+tail(iris, n = 8) #Ãšltimos ocho renglones
+tail(iris, n = 10) #Ãšltimos 10 renglones
 
 iris[c(95:102),]
 
-#Podemos obtener datos estadísticos descriptivos para
-#darnos una idea de nuestros datos con la función
+#Podemos obtener datos estadÃ­sticos descriptivos para
+#darnos una idea de nuestros datos con la funciÃ³n
 #summary()
 
 summary(iris)
 
 #Podemos obtener los nombres de las variables (columnas)
-#de nuestro dataset con la función names()
+#de nuestro dataset con la funciÃ³n names()
 
 names(iris) #Cinco variables
 
-#Podemos obtener el número de renglones y columnas del
-#dataset con la función dim()
+#Podemos obtener el nÃºmero de renglones y columnas del
+#dataset con la funciÃ³n dim()
 
 dim(iris) #Primero renglones (150) y segundo columnas (5)
 
 #Podemos visualizar la clase a la que pertenece el dataset
-#cargado con la función class()
+#cargado con la funciÃ³n class()
 
 class(iris) #Data frame
 
 
 #Factores en R----
 
-#Los factores son variables que toman un número limitado
+#Los factores son variables que toman un nÃºmero limitado
 #de valores. En el dataset de iris se pueden observar 
-#usando la función levels() en la columna de "Species"
+#usando la funciÃ³n levels() en la columna de "Species"
 
 levels(iris$Species) #150 observaciones y tres niveles
 
-#Podemos contar los niveles que hay con la función 
+#Podemos contar los niveles que hay con la funciÃ³n 
 #nlevels()
 
 nlevels(iris$Species) #Tres niveles
 
 #Podemos crear variables y que R las maneje como un factor
-#con la función factor()
+#con la funciÃ³n factor()
 
 letras <- rep(c("A","D","E","H"),6) #24 observaciones
 letras
@@ -73,13 +73,13 @@ letras
 
 factor(letras)
 
-#Se recomienda realizar dicha conversión al momento de 
+#Se recomienda realizar dicha conversiÃ³n al momento de 
 #nombrar a la variable
 
 letras <- factor(rep(c("A","D","E","H"),6))
 letras
 
-#Podemos también elegir el nombre de los niveles de un
+#Podemos tambiÃ©n elegir el nombre de los niveles de un
 #factor con el argumento labels()
 
 letras <- factor(rep(c("A","D","E","H"),6), 
@@ -105,12 +105,12 @@ letras
 letras <- relevel(letras, "A") #Primero la letra A
 letras
 
-#Este tipo de orden se usa mucho en análisis estadístico
-#y en la creaciÃ³n de grÃ¡ficos (que emplean la estadística)
+#Este tipo de orden se usa mucho en anÃ¡lisis estadÃ­stico
+#y en la creaciÃƒÂ³n de grÃƒÂ¡ficos (que emplean la estadÃ­stica)
 #como los boxplots, barplot, density plot, violinplot, etc.
 
 boxplot(iris$Sepal.Length~iris$Species, 
-        ylab = "Longitud del sépalo (cm)",
+        ylab = "Longitud del sÃ©palo (cm)",
         xlab = "Especies")
 
 
@@ -155,7 +155,7 @@ df_iris$Petal.Width #Vector
 df_iris$Species #Vector
 
 #El signo $ se puede usar para extraer una sola columna
-#en forma de vector. Otro caso es la función subset con
+#en forma de vector. Otro caso es la funciÃ³n subset con
 #el argumento select
 
 subset(df_iris, select = c("Petal.Width","Sepal.Length",
@@ -165,8 +165,8 @@ subset(df_iris, select = "Species")
 #Filtrado de datos por renglones (iris)----
 
 #En este punto es donde haremos uso de los operadores
-#lógicos, relacionales y aritméticos en conjunto, para 
-#obtener información específica.
+#lÃ³gicos, relacionales y aritmÃ©ticos en conjunto, para 
+#obtener informaciÃ³n especÃ­fica.
 
 #Podemos extraer los primeros 20 renglones, 30 o 50
 #usando los dos puntos
@@ -182,14 +182,14 @@ df_iris[df_iris$Species == "setosa",]
 df_iris[df_iris$Species == "versicolor",]
 df_iris[df_iris$Species == "virginica",]
 
-#Recordar que los operadores lógicos y relacionales
-#siempre generan un vector de tipo lógico; lo que se
-#está colocando en los corchetes es un vector lógico
+#Recordar que los operadores lÃ³gicos y relacionales
+#siempre generan un vector de tipo lÃ³gico; lo que se
+#estÃ¡ colocando en los corchetes es un vector lÃ³gico
 
 df_iris[df_iris$Sepal.Length > 7.5,]
 
 #Podemos combinar diferentes operadores relacionales
-#y lógicos para extraer datos de forma más específica
+#y lÃ³gicos para extraer datos de forma mÃ¡s especÃ­fica
 
 df_iris[df_iris$Sepal.Length > 5 & 
           df_iris$Petal.Length >= 4.5 &
@@ -201,19 +201,13 @@ df_iris[df_iris$Sepal.Length > 7.5 |
           df_iris$Sepal.Length < 4.5,]
 
 #Otro ejemplo es combinando el operador "AND" y el "OR"
-#en una misma condición
+#en una misma condiciÃ³n
 
 df_iris[(df_iris$Sepal.Length > 7.5 & 
           df_iris$Petal.Width == 2.3 | 
           df_iris$Sepal.Length < 4.5 & 
           df_iris$Petal.Width == 0.2),]
 
-#En el código anterior, dos condiciones se están juntando
-#con el operador "OR", las cuales están unidas por el 
+#En el cÃ³digo anterior, dos condiciones se estÃ¡n juntando
+#con el operador "OR", las cuales estÃ¡n unidas por el 
 #operador "AND", y eso genera el output correspondiente
-
-
-#FIN----
-
-
-df_iris[c(T,F,T,F,T),]
